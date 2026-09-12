@@ -548,6 +548,18 @@ yet") predates step 28 and is now stale — treat step 28 as the correction.
     PIN setup → Home) walked end-to-end in-browser against the real
     backend and a real Supabase project.
 
+## Deployment (Netlify)
+
+`netlify.toml` (repo root) sets `base = "frontend"`, `command = "npm run
+build"`, `publish = "dist"`, plus a catch-all `/* -> /index.html` redirect —
+without it, refreshing or directly opening a client-side route like `/home`
+would 404 instead of loading the app. Connect this repo in Netlify's
+dashboard and it picks this up automatically. One thing `netlify.toml`
+deliberately doesn't set: `VITE_API_BASE_URL` — that has to be added by hand
+in Netlify's Site settings → Environment variables, pointed at wherever
+`../scorewise-backend` ends up deployed (see its own CLAUDE.md's
+"Deployment" section), since it isn't known until that backend exists.
+
 ## Open questions (not yet blocking, revisit before shipping)
 
 - No mockup exists yet for screens 1, 4, 5, 6 — if pixel-exact versions get

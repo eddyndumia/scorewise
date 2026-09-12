@@ -1,0 +1,20 @@
+# Netlify build config. Connect this repo in Netlify's dashboard and it
+# picks this up automatically — no manual build settings needed.
+#
+# VITE_API_BASE_URL must still be set manually in Netlify's dashboard
+# (Site settings -> Environment variables) to the deployed backend's URL
+# (e.g. https://scorewise-backend.onrender.com) — it's not set here since
+# it depends on wherever the backend ends up deployed.
+
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+# React Router client-side routes (e.g. /home, /pin-entry) aren't real
+# files — without this, refreshing or directly opening one of those URLs
+# 404s instead of loading the app and letting the router take over.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
