@@ -1,0 +1,125 @@
+.screen {
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  background: var(--color-surface);
+  padding: 20px 20px 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.backRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 13px;
+  padding: 0;
+  margin-bottom: 20px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0 0 20px;
+}
+
+.projectedCard {
+  background: var(--color-page);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 24px;
+}
+
+.projectedLabel {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+}
+
+.projectedRow {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.projectedScore {
+  font-size: 34px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.projectedDelta {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-bottom: 24px;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.controlLabel {
+  font-size: 13px;
+  color: var(--text-primary);
+  display: flex;
+  justify-content: space-between;
+}
+
+.controlValue {
+  font-weight: 600;
+  color: var(--violet);
+}
+
+.slider {
+  width: 100%;
+  accent-color: var(--violet);
+  height: 4px;
+}
+
+.slider:disabled {
+  opacity: 0.4;
+}
+
+.disabledNote {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.resetLink {
+  align-self: center;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.loading {
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+  margin-top: 60px;
+}

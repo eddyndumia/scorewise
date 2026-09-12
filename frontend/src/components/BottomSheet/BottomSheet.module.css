@@ -1,0 +1,39 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(23, 24, 28, 0.4);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeIn 0.15s ease;
+}
+
+.sheet {
+  width: 100%;
+  max-width: 430px;
+  background: var(--color-surface);
+  border-radius: 20px 20px 0 0;
+  padding: 20px 20px 28px;
+  animation: slideUp 0.2s ease;
+}
+
+.handle {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-border);
+  margin: 0 auto 18px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+}

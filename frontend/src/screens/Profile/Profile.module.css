@@ -1,0 +1,136 @@
+.screen {
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  background: var(--color-surface);
+  padding: 20px 20px 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 20px;
+}
+
+.profileCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--color-page);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--violet-light);
+  color: var(--violet);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.nameBlock {
+  flex: 1;
+  min-width: 0;
+}
+
+.nameInput {
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  background: none;
+  padding: 0;
+  width: 100%;
+  color: var(--text-primary);
+}
+
+.nameInput:focus {
+  outline: none;
+}
+
+.nameHint {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin: 2px 0 0;
+}
+
+.sectionLabel {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+  padding: 0 4px;
+}
+
+.group {
+  background: var(--color-page);
+  border-radius: 14px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.row + .row {
+  border-top: 1px solid var(--color-border);
+}
+
+.rowLabel {
+  font-size: 13.5px;
+  color: var(--text-primary);
+}
+
+.rowValue {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.chevron {
+  color: var(--text-muted);
+}
+
+.themeToggle {
+  display: flex;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 2px;
+}
+
+.themeOption {
+  border: none;
+  background: none;
+  padding: 4px 12px;
+  font-size: 11.5px;
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.themeOptionActive {
+  background: var(--violet);
+  color: #fff;
+}
+
+.destructiveRow .rowLabel {
+  color: var(--coral);
+}

@@ -1,0 +1,11 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--color-page);
+  color: var(--text-secondary);
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+  font-size: 11.5px;
+  white-space: nowrap;
+}

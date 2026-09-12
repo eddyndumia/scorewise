@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&display=swap');
+
+/* Mirrors theme/tokens.ts — keep in sync. */
+:root {
+  --color-page: #f2f1ec;
+  --color-surface: #ffffff;
+  --color-border: #e6e3da;
+
+  --text-primary: #17181c;
+  --text-secondary: #74736a;
+  --text-muted: #a6a498;
+
+  --violet: #4a3fb8;
+  --violet-light: #ece9fb;
+
+  --green: #17794f;
+  --green-light: #e2f2e9;
+  --amber: #b3760f;
+  --amber-light: #faf0dc;
+  --coral: #c1502e;
+  --coral-light: #fbe9e2;
+
+  --radius-card: 16px;
+  --radius-pill: 999px;
+
+  --font-body: 'Inter', sans-serif;
+  --font-numeric: 'Space Grotesk', sans-serif;
+}
+
+/* Toggled by lib/theme.ts via a data-theme attribute on <html> — a user
+   preference stored in localStorage, not tied to the OS setting. The "-light"
+   tokens switch to translucent tints here since the opaque pastels from the
+   light palette (picked for a white surface) look chalky on a dark one. */
+:root[data-theme='dark'] {
+  --color-page: #121317;
+  --color-surface: #1c1d22;
+  --color-border: #2e2f36;
+
+  --text-primary: #f2f1ec;
+  --text-secondary: #a6a498;
+  --text-muted: #74736a;
+
+  --violet-light: rgba(124, 112, 230, 0.22);
+  --green-light: rgba(52, 199, 140, 0.18);
+  --amber-light: rgba(224, 160, 60, 0.2);
+  --coral-light: rgba(224, 110, 80, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-page);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.num {
+  font-family: var(--font-numeric);
+}
+
+button,
+input {
+  font-family: inherit;
+}

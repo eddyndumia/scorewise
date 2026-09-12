@@ -1,0 +1,110 @@
+.bellBtn {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: var(--coral);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  min-width: 15px;
+  height: 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+}
+
+.sheetHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.sheetTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.markAllLink {
+  background: none;
+  border: none;
+  color: var(--violet);
+  font-size: 12.5px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 55vh;
+  overflow-y: auto;
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--color-page);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--violet);
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.dotHidden {
+  visibility: hidden;
+}
+
+.rowText {
+  flex: 1;
+}
+
+.message {
+  font-size: 13px;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+  line-height: 1.4;
+}
+
+.timeAgo {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.empty {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 24px 0;
+}

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ScoreWise — Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --page: #f2f1ec;
+    --card: #ffffff;
+    --border: #e6e3da;
+    --text-primary: #17181c;
+    --text-secondary: #74736a;
+    --text-muted: #a6a498;
+    --violet: #4a3fb8;
+    --violet-light: #ece9fb;
+    --green: #17794f;
+    --green-light: #e2f2e9;
+    --amber: #b3760f;
+    --amber-light: #faf0dc;
+    --coral: #c1502e;
+    --coral-light: #fbe9e2;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--page); color: var(--text-primary); display: flex; min-height: 100vh; font-size: 14px; }
+  .num { font-family: 'Space Grotesk', sans-serif; }
+
+  .sidebar { width: 216px; background: var(--card); border-right: 1px solid var(--border); padding: 24px 18px; flex-shrink: 0; }
+  .brand { display: flex; align-items: center; gap: 9px; margin-bottom: 30px; }
+  .brand-mark { width: 26px; height: 26px; border-radius: 8px; background: var(--violet); display: flex; align-items: center; justify-content: center; color: #fff; font-family: 'Space Grotesk'; font-weight: 600; font-size: 13px; }
+  .brand-name { font-weight: 600; font-size: 14.5px; }
+  .nav-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: 8px; margin-bottom: 2px; color: var(--text-secondary); font-size: 13.5px; }
+  .nav-item.active { background: var(--violet-light); color: var(--violet); font-weight: 500; }
+  .nav-item .count { font-size: 11px; background: var(--page); padding: 1px 7px; border-radius: 100px; color: var(--text-secondary); }
+  .nav-item.active .count { background: var(--violet); color: #fff; }
+  .nav-group { margin: 18px 0 2px 10px; }
+  .promo { margin-top: 24px; background: var(--violet); border-radius: 12px; padding: 16px; color: #fff; }
+  .promo p { font-size: 12px; line-height: 1.5; opacity: 0.85; margin: 4px 0 10px; }
+  .promo strong { font-size: 13.5px; }
+  .promo button { width: 100%; background: rgba(255,255,255,0.15); border: none; color: #fff; padding: 8px; border-radius: 7px; font-size: 12px; }
+
+  .main { flex: 1; padding: 24px 32px; max-width: 1220px; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+  .search { display: flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 8px 14px; width: 300px; color: var(--text-muted); font-size: 13px; }
+  .topbar-right { display: flex; align-items: center; gap: 14px; }
+  .icon-btn { width: 34px; height: 34px; border-radius: 10px; background: var(--card); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--violet-light); color: var(--violet); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 11.5px; }
+
+  .page-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 20px; }
+  .page-head h1 { font-size: 23px; font-weight: 600; letter-spacing: -0.01em; }
+  .head-actions { display: flex; gap: 8px; }
+  .btn { padding: 8px 14px; border-radius: 9px; font-size: 12.5px; font-weight: 500; border: 1px solid var(--border); background: var(--card); }
+  .btn-primary { background: var(--violet); color: #fff; border: none; }
+
+  .mini-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 14px; }
+  .mini-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+  .mini-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .mini-label { font-size: 12.5px; color: var(--text-secondary); }
+  .mini-icon { width: 22px; height: 22px; border-radius: 6px; background: var(--violet-light); color: var(--violet); display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  .mini-val { font-size: 21px; font-weight: 600; }
+  .mini-delta { font-size: 11px; margin-left: 8px; padding: 2px 6px; border-radius: 5px; }
+  .up { background: var(--green-light); color: var(--green); }
+  .down { background: var(--coral-light); color: var(--coral); }
+  .mini-sub { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
+  .panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .panel-title { font-size: 14.5px; font-weight: 600; }
+
+  .chart-val { font-size: 27px; font-weight: 600; }
+  .chart-delta { font-size: 11.5px; color: var(--green); margin-top: 2px; }
+  svg text { font-family: 'Inter'; fill: var(--text-muted); font-size: 9px; }
+
+  .seg-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-top: 14px; }
+  .seg-row { display: flex; gap: 18px; }
+  .seg { flex: 1; }
+  .seg-top { display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+  .seg-dot { width: 7px; height: 7px; border-radius: 2px; }
+  .seg-label { font-size: 11.5px; color: var(--text-muted); margin-bottom: 8px; }
+  .seg-bar { height: 4px; border-radius: 3px; }
+
+  .gauge-wrap { display: flex; flex-direction: column; align-items: center; }
+  .gauge-val { font-size: 26px; font-weight: 600; margin-top: 10px; }
+  .gauge-sub { font-size: 11.5px; color: var(--text-secondary); margin-top: 2px; }
+  .gauge-btn { margin-top: 12px; width: 100%; }
+
+  .t-row { display: grid; grid-template-columns: 26px 1.6fr 1fr 0.8fr 0.9fr; align-items: center; gap: 10px; padding: 10px 2px; border-top: 1px solid var(--border); font-size: 12.5px; }
+  .t-row.head { color: var(--text-muted); font-size: 10.5px; letter-spacing: 0.03em; border-top: none; padding-bottom: 6px; }
+  .t-icon { width: 26px; height: 26px; border-radius: 7px; background: var(--violet-light); color: var(--violet); display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  .t-name { font-weight: 500; }
+  .t-sub { font-size: 10.5px; color: var(--text-muted); }
+  .risk-up { color: var(--green); }
+  .risk-down { color: var(--coral); }
+  .star { color: var(--amber); }
+
+  .ai-panel { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-top: 14px; text-align: center; }
+  .ai-orb { width: 52px; height: 52px; border-radius: 50%; margin: 14px auto; background: radial-gradient(circle at 32% 28%, #8f85e6, var(--violet) 70%); }
+  .ai-input { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: 100px; padding: 8px 8px 8px 16px; margin-top: 8px; }
+  .ai-input span { flex: 1; color: var(--text-muted); font-size: 12.5px; text-align: left; }
+  .ai-send { width: 26px; height: 26px; border-radius: 50%; background: var(--violet); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="brand"><div class="brand-mark">S</div><div class="brand-name">scorewise</div></div>
+
+  <div class="nav-item active">Dashboard</div>
+  <div class="nav-item">Applications <span class="count">46</span></div>
+  <div class="nav-item">Applicants</div>
+  <div class="nav-item">Reports</div>
+  <div class="nav-item">API keys</div>
+
+  <div class="nav-group" style="color:var(--text-muted); font-size:11px;">TEAM</div>
+  <div class="nav-item">Loan officers</div>
+  <div class="nav-item">Roles and access</div>
+
+  <div class="nav-item" style="margin-top:16px;">Settings</div>
+  <div class="nav-item">Help and support</div>
+
+  <div class="promo">
+    <strong>Go to production</strong>
+    <p>You're scoring against sandbox data. Connect Daraja to score real applicants.</p>
+    <button>Connect Daraja</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="search">⌘K &nbsp; Search applicant or ID</div>
+    <div class="topbar-right">
+      <div class="icon-btn">🔔</div>
+      <div class="user" style="display:flex; align-items:center; gap:8px;">
+        <div class="avatar">AS</div>
+        <div>
+          <div style="font-size:12.5px; font-weight:500;">Amani SACCO</div>
+          <div style="font-size:10.5px; color:var(--text-muted);">underwriting team</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-head">
+    <h1>Dashboard</h1>
+    <div class="head-actions">
+      <button class="btn">Jan 1 – Feb 1 · Last 30 days</button>
+      <button class="btn">+ Add widget</button>
+      <button class="btn btn-primary">Export</button>
+    </div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="mini-card">
+      <div class="mini-top"><span class="mini-label">Scores run</span><div class="mini-icon">◔</div></div>
+      <span class="mini-val num">1,204</span><span class="mini-delta up">↑ 18%</span>
+      <div class="mini-sub">vs. 1,021 last period</div>
+    </div>
+    <div class="mini-card">
+      <div class="mini-top"><span class="mini-label">Applicants</span><div class="mini-icon">◔</div></div>
+      <span class="mini-val num">982</span><span class="mini-delta up">↑ 8.4%</span>
+      <div class="mini-sub">vs. 906 last period</div>
+    </div>
+    <div class="mini-card">
+      <div class="mini-top"><span class="mini-label">Flagged</span><div class="mini-icon">◔</div></div>
+      <span class="mini-val num">61</span><span class="mini-delta down">↓ 10.5%</span>
+      <div class="mini-sub">debt-stacking or gaps</div>
+    </div>
+    <div class="mini-card">
+      <div class="mini-top"><span class="mini-label">Approved</span><div class="mini-icon">◔</div></div>
+      <span class="mini-val num">742</span><span class="mini-delta up">↑ 4.0%</span>
+      <div class="mini-sub">61% approval rate</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">Average score</div>
+          <div class="chart-val num">612</div>
+          <div class="chart-delta">▲ 24.4% vs. last period</div>
+        </div>
+        <span style="font-size:11px; color:var(--text-muted)">1 Jan – 29 Jan</span>
+      </div>
+      <svg viewBox="0 0 500 140" width="100%" height="140">
+        <polyline points="10,110 60,105 110,95 160,60 210,70 260,50 310,55 360,40 410,45 460,30" fill="none" stroke="var(--violet)" stroke-width="2.5"/>
+        <polyline points="10,120 60,118 110,110 160,100 210,95 260,90 310,80 360,75 410,68 460,60" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-dasharray="3,3"/>
+        <polygon points="10,110 60,105 110,95 160,60 210,70 260,50 310,55 360,40 410,45 460,30 460,140 10,140" fill="var(--violet-light)" opacity="0.5"/>
+        <text x="5" y="135">1 Jan</text><text x="150" y="135">15 Jan</text><text x="440" y="135">29 Jan</text>
+      </svg>
+
+      <div class="seg-card" style="margin-top:0; border:none; padding:14px 0 0; border-top:1px solid var(--border); border-radius:0;">
+        <div class="seg-row">
+          <div class="seg">
+            <div class="seg-top"><span class="seg-dot" style="background:var(--green)"></span>742</div>
+            <div class="seg-label">Approved</div>
+            <div class="seg-bar" style="background:var(--green); width:100%"></div>
+          </div>
+          <div class="seg">
+            <div class="seg-top"><span class="seg-dot" style="background:var(--amber)"></span>183</div>
+            <div class="seg-label">Manual review</div>
+            <div class="seg-bar" style="background:var(--amber); width:60%"></div>
+          </div>
+          <div class="seg">
+            <div class="seg-top"><span class="seg-dot" style="background:var(--coral)"></span>279</div>
+            <div class="seg-label">Declined</div>
+            <div class="seg-bar" style="background:var(--coral); width:40%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel">
+        <div class="panel-head"><span class="panel-title">Busiest scoring day</span></div>
+        <div style="display:flex; align-items:flex-end; gap:7px; height:80px;">
+          <div style="flex:1; height:40%; background:var(--border); border-radius:4px 4px 2px 2px;"></div>
+          <div style="flex:1; height:55%; background:var(--border); border-radius:4px 4px 2px 2px;"></div>
+          <div style="flex:1; height:100%; background:var(--violet); border-radius:4px 4px 2px 2px;"></div>
+          <div style="flex:1; height:65%; background:var(--border); border-radius:4px 4px 2px 2px;"></div>
+          <div style="flex:1; height:35%; background:var(--border); border-radius:4px 4px 2px 2px;"></div>
+          <div style="flex:1; height:30%; background:var(--border); border-radius:4px 4px 2px 2px;"></div>
+          <div style="flex:1; height:45%; background:var(--border); border-radius:4px 4px 2px 2px;"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:10.5px; color:var(--text-muted);">
+          <span>Sun</span><span>Mon</span><span style="color:var(--violet); font-weight:600">Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:14px;">
+        <div class="panel-head"><span class="panel-title">Approval rate</span></div>
+        <div class="gauge-wrap">
+          <svg width="150" height="82" viewBox="0 0 150 82">
+            <g id="ticks"></g>
+          </svg>
+          <div class="gauge-val num">61%</div>
+          <div class="gauge-sub">On track for 70% target</div>
+        </div>
+        <button class="btn gauge-btn">Show details</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-head"><span class="panel-title">Recent applicants</span><span style="font-size:11px; color:var(--text-muted)">···</span></div>
+      <div class="t-row head"><span></span><span>Applicant</span><span>Score</span><span>Flag</span><span>Status</span></div>
+      <div class="t-row">
+        <div class="t-icon">👤</div>
+        <div><div class="t-name">254712***089</div><div class="t-sub">req_8a2f</div></div>
+        <div class="num" style="font-weight:600">684</div>
+        <div class="risk-up">● low</div>
+        <div class="star">Approved</div>
+      </div>
+      <div class="t-row">
+        <div class="t-icon">👤</div>
+        <div><div class="t-name">254733***412</div><div class="t-sub">req_8a30</div></div>
+        <div class="num" style="font-weight:600">591</div>
+        <div style="color:var(--amber)">● moderate</div>
+        <div style="color:var(--amber)">Review</div>
+      </div>
+      <div class="t-row">
+        <div class="t-icon">👤</div>
+        <div><div class="t-name">254701***775</div><div class="t-sub">req_8a31</div></div>
+        <div class="num" style="font-weight:600">438</div>
+        <div class="risk-down">● high</div>
+        <div class="risk-down">Declined</div>
+      </div>
+      <div class="t-row">
+        <div class="t-icon">👤</div>
+        <div><div class="t-name">254722***903</div><div class="t-sub">req_8a32</div></div>
+        <div class="num" style="font-weight:600">712</div>
+        <div class="risk-up">● low</div>
+        <div class="star">Approved</div>
+      </div>
+    </div>
+
+    <div class="ai-panel">
+      <div class="panel-title" style="text-align:left;">AI assistant</div>
+      <div class="ai-orb"></div>
+      <div class="ai-input"><span>Ask about an applicant...</span><div class="ai-send">↑</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const ticks = document.getElementById('ticks');
+  const total = 24, filled = 15, cx = 75, cy = 75, r = 62;
+  for (let i = 0; i < total; i++) {
+    const angle = Math.PI + (i / (total - 1)) * Math.PI;
+    const x1 = cx + (r - 10) * Math.cos(angle);
+    const y1 = cy + (r - 10) * Math.sin(angle);
+    const x2 = cx + r * Math.cos(angle);
+    const y2 = cy + r * Math.sin(angle);
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", x1); line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2); line.setAttribute("y2", y2);
+    line.setAttribute("stroke", i < filled ? "#17794f" : "#e6e3da");
+    line.setAttribute("stroke-width", "3.5");
+    line.setAttribute("stroke-linecap", "round");
+    ticks.appendChild(line);
+  }
+</script>
+
+</body>
+</html>

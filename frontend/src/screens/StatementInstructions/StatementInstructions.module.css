@@ -1,0 +1,105 @@
+.screen {
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  background: var(--color-surface);
+  padding: 24px 20px 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+.tabs {
+  display: flex;
+  background: var(--color-page);
+  border-radius: var(--radius-pill);
+  padding: 3px;
+  margin-bottom: 16px;
+}
+
+.tab {
+  flex: 1;
+  border: none;
+  background: none;
+  padding: 8px 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.tabActive {
+  background: var(--violet);
+  color: #fff;
+}
+
+.stepList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.stepNumber {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--violet-light);
+  color: var(--violet);
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.stepText {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.passwordNote {
+  background: var(--color-page);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 24px;
+}
+
+.passwordNoteTitle {
+  font-size: 12.5px;
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+.passwordNoteBody {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.footer {
+  margin-top: auto;
+}

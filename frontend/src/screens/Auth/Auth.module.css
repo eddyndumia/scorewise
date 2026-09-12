@@ -1,0 +1,65 @@
+.screen {
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  background: var(--color-surface);
+  padding: 56px 24px 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.wordmark {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.tagline {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0 0 40px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 12px;
+  margin: 4px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.switchLine {
+  margin-top: auto;
+  padding-top: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.switchLine a {
+  color: var(--violet);
+  font-weight: 500;
+  text-decoration: none;
+}

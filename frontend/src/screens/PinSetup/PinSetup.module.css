@@ -1,0 +1,50 @@
+.screen {
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  background: var(--color-surface);
+  padding: 56px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0 0 40px;
+}
+
+.errorText {
+  font-size: 12.5px;
+  color: var(--coral);
+  margin: -24px 0 24px;
+  min-height: 16px;
+}
+
+.biometricIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--violet-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 280px;
+  margin-top: 24px;
+}

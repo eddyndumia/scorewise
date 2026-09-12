@@ -1,0 +1,85 @@
+.screen {
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  background: var(--color-surface);
+  padding: 20px 20px 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.backRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 13px;
+  padding: 0;
+  margin-bottom: 24px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.version {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 4px 0 0;
+}
+
+.wordmark {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 12px 0 4px;
+}
+
+.description {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  text-align: center;
+  margin: 0 0 28px;
+}
+
+.sectionLabel {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+  padding: 0 4px;
+}
+
+.lenderCard {
+  background: var(--color-page);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.lenderNote {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+
+.lenderList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lenderChip {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--text-primary);
+}

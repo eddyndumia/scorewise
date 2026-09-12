@@ -1,0 +1,48 @@
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  transition: background 0.1s ease, border-color 0.1s ease;
+}
+
+.filled {
+  background: var(--violet);
+  border-color: var(--violet);
+}
+
+.errorDot {
+  background: var(--coral);
+  border-color: var(--coral);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.key {
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-page);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.key:active {
+  background: var(--violet-light);
+}

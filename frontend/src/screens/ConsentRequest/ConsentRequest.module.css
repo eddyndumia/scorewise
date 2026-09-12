@@ -1,0 +1,68 @@
+.screen {
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  background: var(--color-surface);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.lenderName {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.headerSub {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.sectionTitle {
+  font-size: 12px;
+  font-weight: 500;
+  margin: 0 0 10px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+}
+
+.willRow {
+  color: var(--text-primary);
+}
+
+.wontRow {
+  color: var(--text-muted);
+}
+
+.expiryRow {
+  margin-bottom: auto;
+  padding-top: 4px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.actions > * {
+  flex: 1;
+}
