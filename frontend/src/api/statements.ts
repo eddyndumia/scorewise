@@ -46,7 +46,7 @@ export async function uploadStatement(file: File, password: string): Promise<Upl
   formData.append('file', file);
   if (password) formData.append('password', password);
 
-  const res = await fetch(`${BASE_URL}/v1/statements/upload`, { method: 'POST', body: formData });
+  const res = await fetch(`${BASE_URL}/v1/statements/upload`, { method: 'POST', credentials: 'include', body: formData });
   return handleResponse<UploadResult>(res);
 }
 
@@ -56,6 +56,7 @@ export async function classifyStatement(
 ): Promise<{ status: 'complete' } & ScoreResult> {
   const res = await fetch(`${BASE_URL}/v1/statements/${sessionId}/classify`, {
     method: 'POST',
+    credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ answers }),
   });

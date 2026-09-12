@@ -13,6 +13,8 @@ import {
   recordPinFailure,
   clearPinFailures,
 } from '../../lib/session';
+import { logOut } from '../../api/auth';
+import { setCachedAccount } from '../../lib/authSession';
 import styles from './PinEntry.module.css';
 
 function formatLockout(ms: number): string {
@@ -79,9 +81,16 @@ export function PinEntry() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pin]);
 
-  const handleReset = () => {
+  // This was always about a forgotten *device PIN*, not the account itself —
+  // now that those are genuinely separate (a real Supabase session vs. a
+  // local device lock), forcing a full data wipe over 4 forgotten digits
+  // would be needlessly destructive. This just signs out: the account and
+  // its data are untouched, and the same email/password logs back in.
+  const handleSignOut = async () => {
+    await logOut();
     clearAll();
-    navigate('/');
+    setCachedAccount(false);
+    navigate('/login');
   };
 
   return (
@@ -101,8 +110,8 @@ export function PinEntry() {
         </button>
       )}
 
-      <button className={styles.resetLink} onClick={handleReset}>
-        Forgot PIN? Reset account
+      <button className={styles.resetLink} onClick={handleSignOut}>
+        Forgot PIN? Sign out
       </button>
     </div>
   );

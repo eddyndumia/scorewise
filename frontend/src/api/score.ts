@@ -26,7 +26,7 @@ export async function simulateScore(adjustments: SimulateAdjustments): Promise<S
 }
 
 export async function downloadScoreReport(): Promise<void> {
-  const res = await fetch(`${BASE_URL}/v1/score/report`);
+  const res = await fetch(`${BASE_URL}/v1/score/report`, { credentials: 'include' });
   if (!res.ok) throw new Error(`GET /v1/score/report failed: ${res.status}`);
   const blob = await res.blob();
   const url = URL.createObjectURL(blob);

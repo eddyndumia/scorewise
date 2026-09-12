@@ -18,6 +18,7 @@ export async function getSavingsGoal(): Promise<SavingsGoalStatus> {
 export async function setSavingsGoal(targetAmount: number): Promise<void> {
   const res = await fetch(`${BASE_URL}/v1/savings-goal`, {
     method: 'PUT',
+    credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ targetAmount }),
   });
@@ -25,6 +26,6 @@ export async function setSavingsGoal(targetAmount: number): Promise<void> {
 }
 
 export async function clearSavingsGoal(): Promise<void> {
-  const res = await fetch(`${BASE_URL}/v1/savings-goal`, { method: 'DELETE' });
+  const res = await fetch(`${BASE_URL}/v1/savings-goal`, { method: 'DELETE', credentials: 'include' });
   if (!res.ok) throw new Error(`DELETE /v1/savings-goal failed: ${res.status}`);
 }

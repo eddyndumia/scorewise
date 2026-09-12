@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { RequestsProvider } from './context/RequestsContext';
+import { refreshAuthSession } from './lib/authSession';
+import { Logo } from './components/Logo';
 import { RequireUnlocked, RequireUnlockedOrRegistering } from './routes/RequireUnlocked';
 import { Splash } from './screens/Splash/Splash';
 import { Onboarding } from './screens/Onboarding/Onboarding';
@@ -129,6 +132,26 @@ function AnimatedRoutes() {
 }
 
 function App() {
+  const [sessionResolved, setSessionResolved] = useState(false);
+
+  // RequireUnlocked's hasAccount() check is synchronous, but real account
+  // existence now lives behind an httpOnly cookie this code can't read
+  // directly (see lib/authSession.ts). Resolving one GET /v1/auth/session
+  // here, before any route renders, means that cache is never stale on
+  // first load — including a direct URL/bookmark straight to /home, which
+  // Splash's own branded-pause check alone can't cover.
+  useEffect(() => {
+    refreshAuthSession().finally(() => setSessionResolved(true));
+  }, []);
+
+  if (!sessionResolved) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+        <Logo size={32} />
+      </div>
+    );
+  }
+
   return (
     <RequestsProvider>
       <BrowserRouter>

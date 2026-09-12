@@ -11,6 +11,7 @@ export async function getProfile(): Promise<Profile> {
 export async function updateProfile(name: string): Promise<Profile> {
   const res = await fetch(`${BASE_URL}/v1/profile`, {
     method: 'PUT',
+    credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name }),
   });

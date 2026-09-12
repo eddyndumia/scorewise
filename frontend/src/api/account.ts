@@ -1,7 +1,7 @@
 import { BASE_URL } from './client';
 
 export async function downloadDataExport(): Promise<void> {
-  const res = await fetch(`${BASE_URL}/v1/data-export`);
+  const res = await fetch(`${BASE_URL}/v1/data-export`, { credentials: 'include' });
   if (!res.ok) throw new Error(`GET /v1/data-export failed: ${res.status}`);
   const blob = await res.blob();
   const url = URL.createObjectURL(blob);
@@ -15,6 +15,6 @@ export async function downloadDataExport(): Promise<void> {
 }
 
 export async function deleteAccountData(): Promise<void> {
-  const res = await fetch(`${BASE_URL}/v1/account`, { method: 'DELETE' });
+  const res = await fetch(`${BASE_URL}/v1/account`, { method: 'DELETE', credentials: 'include' });
   if (!res.ok) throw new Error(`DELETE /v1/account failed: ${res.status}`);
 }

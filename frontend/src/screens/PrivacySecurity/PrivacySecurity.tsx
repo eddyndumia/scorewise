@@ -7,6 +7,7 @@ import {
   isBiometricAvailable,
   clearAll,
 } from '../../lib/session';
+import { setCachedAccount } from '../../lib/authSession';
 import { downloadScoreReport } from '../../api/score';
 import { downloadDataExport, deleteAccountData } from '../../api/account';
 import styles from './PrivacySecurity.module.css';
@@ -54,14 +55,17 @@ export function PrivacySecurity() {
   const handleReset = async () => {
     setResetting(true);
     try {
-      // Wipes the backend's data too, not just this device's local
-      // unlock/PIN state — without this, "Reset account" only reset the
+      // Soft reset: wipes the backend's data rows AND ends the server
+      // session (see routers/account.py) — the Supabase account itself
+      // isn't deleted, so the same email/password logs back in and starts
+      // fresh. Without the backend call, "Reset account" only reset the
       // frontend while the old profile/score/grants silently survived on
-      // the backend, which isn't a real reset.
+      // the backend, which wasn't a real reset.
       await deleteAccountData();
     } finally {
       clearAll();
-      navigate('/');
+      setCachedAccount(false);
+      navigate('/login');
     }
   };
 

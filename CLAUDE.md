@@ -215,9 +215,11 @@ actually does and its known limits (in-memory store, unverified PDF parser).
     actually do yet — it has not been tested against a real Safaricom export.
     Accessibility pass (tap targets, contrast on status pills) still open.
 
-Auth is fully mocked — Continue/Log in just navigate to `/home` — there is no
-session, token, or backend call yet. Wire this up whenever the shared FastAPI
-backend exposes real auth.
+~~Auth is fully mocked~~ — **done, see step 28**: `AuthForm`'s Continue/Log in
+now call the real backend (`api/auth.ts`), which brokers real Supabase Auth
+sessions as httpOnly cookies. Kept here as a marker of what this section used
+to say, since several later steps' wording ("mocked auth flow", "no session
+yet") predates step 28 and is now stale — treat step 28 as the correction.
 
 11. ~~Ambiguous transaction review~~ — done. When the backend can't confidently
     classify some Pay Bill/Business Payment transactions (generic bank
@@ -498,6 +500,53 @@ backend exposes real auth.
     in-memory store now means the Supabase migration only has to move data
     that already has a real shape, rather than also inventing these
     features' logic from scratch at the same time.
+
+28. ~~Real Supabase Auth, replacing mocked sign up/log in~~ — done, paired
+    with the backend's "Supabase migration, pass 1" (see
+    `../scorewise-backend/CLAUDE.md`). `AuthForm.tsx`'s Continue button now
+    calls real `signUp`/`logIn` (`api/auth.ts`) against the backend, which
+    brokers Supabase Auth and sets the session as httpOnly cookies — the
+    frontend never talks to Supabase directly and never handles a raw
+    token, so there was no reason to add `@supabase/supabase-js` as a
+    dependency here at all. Every `api/*.ts` fetch call now sends
+    `credentials: 'include'` so those cookies actually flow.
+
+    `hasAccount()` (`lib/session.ts`) changed from a synchronous
+    `localStorage` flag to reading an in-memory cache
+    (`lib/authSession.ts`) populated by one `GET /v1/auth/session` call —
+    `App.tsx` now awaits that once, before rendering any route, so
+    `RequireUnlocked`'s synchronous check is never stale on first load
+    (covers a direct URL/bookmark straight to `/home`, which `Splash`'s own
+    branded-pause check alone couldn't). `setAccount()` is gone entirely —
+    account existence is a server fact now, not a flag `PinSetup` used to
+    set for itself.
+
+    Two flows changed behavior now that "the account" (Supabase identity)
+    and "the device PIN" (local lock) are genuinely separate concepts,
+    where before both were fictional:
+    - **Privacy & Security's "Reset account"** is a *soft* reset — wipes
+      backend data and ends the session, but does not delete the Supabase
+      account; the same email/password logs back in and starts fresh. A
+      full identity deletion was considered and deliberately not built
+      (would need the backend's service_role admin API).
+    - **PinEntry's "Forgot PIN?"** now signs out (`api/auth.ts`'s `logOut`)
+      instead of wiping data — it was always about a forgotten *device*
+      PIN, not the account, so forcing a full reset over 4 digits would
+      have been needlessly destructive now that the two are actually
+      distinguishable. Copy changed from "Reset account" to "Sign out" to
+      match.
+
+    Verified live, not just type-checked: real signup creates a genuine
+    Supabase `auth.users` row and seeds default score/grants/notifications
+    data; two independently signed-up accounts each see only their own
+    profile when queried back-to-back; a direct Postgres query as the
+    `authenticated` role scoped to one account's `auth.uid()` — with no
+    `WHERE` clause at all — returns only that account's rows, confirming
+    the backend's Row Level Security is the actual isolation boundary, not
+    an application-level filter. Full registration flow (Splash →
+    Onboarding → Sign up → Terms → Statement Instructions → skip-to-demo →
+    PIN setup → Home) walked end-to-end in-browser against the real
+    backend and a real Supabase project.
 
 ## Open questions (not yet blocking, revisit before shipping)
 

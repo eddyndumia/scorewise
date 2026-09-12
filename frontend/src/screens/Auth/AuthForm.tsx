@@ -5,6 +5,8 @@ import { TextField } from '../../components/TextField/TextField';
 import { Logo } from '../../components/Logo';
 import { GoogleIcon, AppleIcon } from './icons';
 import { hasPin } from '../../lib/session';
+import { signUp, logIn } from '../../api/auth';
+import { setCachedAccount } from '../../lib/authSession';
 import styles from './Auth.module.css';
 
 interface AuthFormProps {
@@ -33,20 +35,38 @@ export function AuthForm({
 }: AuthFormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const canSubmit = email.includes('@') && email.includes('.') && password.length >= minPasswordLength;
 
-  const handleSubmit = () => {
-    if (!canSubmit) return;
-    // No backend yet — this is the mock auth flow. Sign up is a brand-new
-    // account, so it goes through terms + statement upload; log in is a
-    // returning session that just needs unlocking.
-    if (isSignUp) {
-      navigate('/terms');
-    } else {
-      navigate(hasPin() ? '/pin-entry' : '/pin-setup');
+  const handleSubmit = async () => {
+    if (!canSubmit || submitting) return;
+    setError('');
+    setSubmitting(true);
+    try {
+      if (isSignUp) {
+        await signUp(email, password);
+        setCachedAccount(true);
+        navigate('/terms');
+      } else {
+        await logIn(email, password);
+        setCachedAccount(true);
+        navigate(hasPin() ? '/pin-entry' : '/pin-setup');
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.');
+    } finally {
+      setSubmitting(false);
     }
+  };
+
+  // Google/Apple are UI stubs — no real OAuth wired up yet, so they're
+  // deliberately not connected to signUp/logIn (which need a real
+  // email/password). See the project CLAUDE.md.
+  const handleSocialStub = () => {
+    setError('Social sign-in is not available yet — please use email and password.');
   };
 
   return (
@@ -71,17 +91,18 @@ export function AuthForm({
           placeholder={passwordPlaceholder}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          error={error || undefined}
         />
-        <Button variant="primary" disabled={!canSubmit} iconRight="→" onClick={handleSubmit}>
-          {submitLabel}
+        <Button variant="primary" disabled={!canSubmit || submitting} iconRight="→" onClick={handleSubmit}>
+          {submitting ? 'Please wait…' : submitLabel}
         </Button>
 
         <div className={styles.divider}>or</div>
 
-        <Button variant="social" iconLeft={<GoogleIcon />} onClick={handleSubmit}>
+        <Button variant="social" iconLeft={<GoogleIcon />} onClick={handleSocialStub}>
           {socialVerb} with Google
         </Button>
-        <Button variant="social" iconLeft={<AppleIcon />} onClick={handleSubmit}>
+        <Button variant="social" iconLeft={<AppleIcon />} onClick={handleSocialStub}>
           {socialVerb} with Apple
         </Button>
       </div>

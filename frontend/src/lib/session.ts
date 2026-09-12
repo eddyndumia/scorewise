@@ -1,6 +1,8 @@
-// Client-side "session" for the prototype — there is no backend auth yet, so
-// account/PIN state lives in localStorage and unlock state in sessionStorage
-// (clears on tab close, which naturally simulates "re-lock on relaunch").
+// Client-side "session" — PIN/unlock state (device-level lock) lives in
+// localStorage/sessionStorage as before. Account existence, though, is now a
+// real server fact (a Supabase auth session, held as an httpOnly cookie this
+// code can't read) rather than a local flag — see lib/authSession.ts for the
+// cache that backs hasAccount() below.
 //
 // SECURITY NOTE: storing the PIN itself in localStorage (even lightly obscured)
 // is not how a real app should do this — a real implementation verifies the
@@ -8,7 +10,8 @@
 // plain, script-readable storage. This is a UI/UX prototype of the flow, not
 // a secure implementation. Flagging rather than pretending otherwise.
 
-const ACCOUNT_KEY = 'sw_account';
+import { hasCachedAccount } from './authSession';
+
 const PIN_KEY = 'sw_pin';
 const BIOMETRIC_CRED_KEY = 'sw_biometric_cred_id';
 const UNLOCKED_KEY = 'sw_unlocked';
@@ -38,11 +41,7 @@ export function setAcceptedTerms(): void {
 }
 
 export function hasAccount(): boolean {
-  return localStorage.getItem(ACCOUNT_KEY) !== null;
-}
-
-export function setAccount(): void {
-  localStorage.setItem(ACCOUNT_KEY, 'true');
+  return hasCachedAccount();
 }
 
 export function hasPin(): boolean {
@@ -89,7 +88,6 @@ export function clearUnlocked(): void {
 }
 
 export function clearAll(): void {
-  localStorage.removeItem(ACCOUNT_KEY);
   localStorage.removeItem(PIN_KEY);
   localStorage.removeItem(BIOMETRIC_CRED_KEY);
   localStorage.removeItem(TERMS_KEY);

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PinKeypad } from '../../components/PinKeypad/PinKeypad';
 import { Button } from '../../components/Button/Button';
-import { setPin, setAccount, setUnlocked, isBiometricAvailable, enrollBiometric } from '../../lib/session';
+import { setPin, setUnlocked, isBiometricAvailable, enrollBiometric } from '../../lib/session';
 import { FingerprintIcon } from '../../components/FingerprintIcon';
 import styles from './PinSetup.module.css';
 
@@ -30,7 +30,6 @@ export function PinSetup() {
     if (step === 'confirm' && confirmPin.length === 4) {
       if (confirmPin === pin) {
         setPin(pin);
-        setAccount();
         setUnlocked();
         setError('');
         if (biometricAvailable) {
