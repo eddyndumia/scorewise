@@ -11,6 +11,7 @@ import { Logo } from '../../components/Logo';
 import { CashFlowChart } from '../../components/CashFlowChart/CashFlowChart';
 import { SavingsGoalCard } from '../../components/SavingsGoalCard/SavingsGoalCard';
 import { NotificationBell } from '../../components/NotificationBell/NotificationBell';
+import { LoadingState } from '../../components/LoadingState/LoadingState';
 import { getScore } from '../../api/score';
 import { getProfile } from '../../api/profile';
 import { getCashFlow, type CashFlowPoint } from '../../api/cashFlow';
@@ -54,7 +55,7 @@ export function Home() {
     getCashFlow().then(setCashFlow);
   }, []);
 
-  if (!result) return null;
+  if (!result) return <LoadingState message="Loading your score…" />;
 
   const isUp = result.delta >= 0;
   const points = trendPoints(result.previousScore, result.score);

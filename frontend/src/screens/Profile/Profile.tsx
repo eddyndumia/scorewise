@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BottomNav } from '../../components/BottomNav/BottomNav';
+import { LoadingState } from '../../components/LoadingState/LoadingState';
 import { getProfile, updateProfile } from '../../api/profile';
 import { getTheme, setTheme, type Theme } from '../../lib/theme';
 import styles from './Profile.module.css';
@@ -43,12 +44,14 @@ export function Profile() {
     setThemeState(next);
   };
 
+  if (!loaded) return <LoadingState message="Loading your profile…" />;
+
   return (
     <div className={styles.screen}>
       <h1 className={styles.title}>Profile</h1>
 
       <div className={styles.profileCard}>
-        <div className={styles.avatar}>{loaded ? initials(name || '?') : ''}</div>
+        <div className={styles.avatar}>{initials(name || '?')}</div>
         <div className={styles.nameBlock}>
           <input
             className={styles.nameInput}

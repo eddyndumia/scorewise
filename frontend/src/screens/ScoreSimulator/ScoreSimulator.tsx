@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getScore, getSimulateLimits, simulateScore, type SimulateLimits } from '../../api/score';
 import { formatKes } from '../../lib/formatCurrency';
+import { LoadingState } from '../../components/LoadingState/LoadingState';
 import type { ScoreResult } from '../../lib/scoring';
 import styles from './ScoreSimulator.module.css';
 
@@ -43,11 +44,7 @@ export function ScoreSimulator() {
   };
 
   if (!limits || !currentScore) {
-    return (
-      <div className={styles.screen}>
-        <p className={styles.loading}>Loading your current numbers…</p>
-      </div>
-    );
+    return <LoadingState message="Loading your current numbers…" />;
   }
 
   const savingsCap = Math.max(2000, Math.round((limits.totalIncome * 0.5) / 500) * 500);
