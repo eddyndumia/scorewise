@@ -564,10 +564,12 @@ in Netlify's Site settings → Environment variables, pointed at wherever
 
 - No mockup exists yet for screens 1, 4, 5, 6 — if pixel-exact versions get
   designed later, re-check them against the interpreted versions built here.
-- MSW vs. a lightweight local FastAPI stub for `/v1/score`, `/v1/consent`,
-  `/v1/requests` during frontend-only development — defaulting to MSW since the
-  real backend is FastAPI built elsewhere and we don't want a second backend to
-  maintain. Confirm this is fine once integration actually starts.
+- ~~MSW vs. a lightweight local FastAPI stub~~ — moot: MSW was never actually
+  installed (no dependency, no `setupWorker`). `mocks/consentRequest.ts` and
+  `mocks/statementMetrics.ts` were the real stand-in, but real backend
+  integration (step 9 onward) happened directly against it and left those two
+  files with zero imports anywhere — deleted during the ScoreWise restructure
+  pass rather than left as dead code.
 - Exact radius brief says "12-16px" but the only real file uses a flat 16px —
   using 16px everywhere for consistency; flag if a tighter card (e.g. list rows)
   wants 12px instead.
