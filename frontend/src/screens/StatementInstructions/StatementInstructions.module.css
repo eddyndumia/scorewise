@@ -82,7 +82,7 @@
 
 .passwordNote {
   background: var(--color-page);
-  border-radius: 12px;
+  border-radius: var(--radius-control);
   padding: 12px 14px;
   margin-bottom: 24px;
 }

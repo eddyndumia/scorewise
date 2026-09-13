@@ -89,7 +89,7 @@
 
 .miniCard {
   background: var(--color-page);
-  border-radius: 12px;
+  border-radius: var(--radius-control);
   padding: 10px;
 }
 

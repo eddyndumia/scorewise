@@ -57,7 +57,7 @@
 
 .lenderCard {
   background: var(--color-page);
-  border-radius: 14px;
+  border-radius: var(--radius-card);
   padding: 16px;
   margin-bottom: 20px;
 }

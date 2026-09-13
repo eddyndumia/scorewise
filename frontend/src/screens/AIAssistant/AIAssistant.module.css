@@ -48,7 +48,7 @@
 .bubble {
   max-width: 82%;
   padding: 10px 13px;
-  border-radius: 14px;
+  border-radius: var(--radius-card);
   font-size: 13px;
   line-height: 1.5;
 }

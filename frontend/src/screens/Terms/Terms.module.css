@@ -20,7 +20,7 @@
 .disclaimer {
   background: var(--amber-light);
   color: var(--amber);
-  border-radius: 10px;
+  border-radius: var(--radius-control);
   padding: 10px 12px;
   font-size: 11.5px;
   line-height: 1.5;

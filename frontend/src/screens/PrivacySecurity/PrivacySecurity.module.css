@@ -38,7 +38,7 @@
 
 .group {
   background: var(--color-page);
-  border-radius: 14px;
+  border-radius: var(--radius-card);
   margin-bottom: 20px;
   overflow: hidden;
 }
