@@ -1,0 +1,39 @@
+.track {
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--color-page);
+  overflow: hidden;
+}
+
+.fillDeterminate {
+  height: 100%;
+  background: var(--violet);
+  border-radius: var(--radius-pill);
+  transition: width 200ms ease-out;
+}
+
+.fillIndeterminate {
+  height: 100%;
+  width: 40%;
+  background: var(--violet);
+  border-radius: var(--radius-pill);
+  animation: sweep 1.1s ease-in-out infinite;
+}
+
+@keyframes sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(250%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fillIndeterminate {
+    animation: none;
+    width: 100%;
+    opacity: 0.5;
+  }
+}

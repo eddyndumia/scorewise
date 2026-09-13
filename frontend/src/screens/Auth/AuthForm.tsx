@@ -6,6 +6,7 @@ import { Logo } from '../../components/Logo';
 import { GoogleIcon, AppleIcon } from './icons';
 import { hasPin } from '../../lib/session';
 import { signUp, logIn } from '../../api/auth';
+import { NetworkError } from '../../api/client';
 import { setCachedAccount } from '../../lib/authSession';
 import styles from './Auth.module.css';
 
@@ -56,7 +57,11 @@ export function AuthForm({
         navigate(hasPin() ? '/pin-entry' : '/pin-setup');
       }
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.');
+      if (e instanceof NetworkError) {
+        setError("Couldn't reach the server — it may be waking up after being idle. Please try again in a moment.");
+      } else {
+        setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.');
+      }
     } finally {
       setSubmitting(false);
     }
