@@ -3,7 +3,7 @@
 #
 # VITE_API_BASE_URL must still be set manually in Netlify's dashboard
 # (Site settings -> Environment variables) to the deployed backend's URL
-# (e.g. https://scorewise-backend.onrender.com) — it's not set here since
+# (e.g. https://pesascore-backend.onrender.com) — it's not set here since
 # it depends on wherever the backend ends up deployed.
 
 [build]

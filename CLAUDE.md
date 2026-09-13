@@ -1,9 +1,9 @@
-# ScoreWise — Consumer App
+# PesaScore — Consumer App
 
 Borrower-facing mobile app where M-Pesa users view their own credit score, manage
 lender consent, and (until Daraja is live) upload statements manually.
 
-**This is one of two ScoreWise apps.** The other is a B2B lender dashboard
+**This is one of two PesaScore apps.** The other is a B2B lender dashboard
 (sidebar nav, applicant tables, underwriting tools — see
 `mockups/b2b-dashboard-token-reference.html`), built in a separate session against
 the same backend. Do not build or reference its screens here. The two apps *do*
@@ -14,7 +14,7 @@ component (used here on the Home screen, used there on the applicant-detail view
 
 No single "all-screens" mockup exists yet. What we actually have, in order of trust:
 
-1. **`mockups/b2b-dashboard-token-reference.html`** — real ScoreWise HTML/CSS
+1. **`mockups/b2b-dashboard-token-reference.html`** — real PesaScore HTML/CSS
    (the B2B dashboard). Not a consumer screen, but it's the only file with exact
    hex values, so it is the **authoritative source for design tokens** (colors,
    radius, fonts, the filled-pill convention). Also confirms the circular
@@ -29,7 +29,7 @@ No single "all-screens" mockup exists yet. What we actually have, in order of tr
 3. **Leafboard reference screenshot** (provided in chat, not saved as a file) —
    structural/mood reference for the splash screen ONLY: dark hero shape behind
    a circular badge, single accent color, pill-shaped primary CTA, wordmark below
-   the hero. **Its green accent and copy are not ours** — render the ScoreWise
+   the hero. **Its green accent and copy are not ours** — render the PesaScore
    hero in violet (#4a3fb8), not green. Sign-up/login screen layout (logo,
    tagline, email field, password field with visibility toggle, disabled→enabled
    primary button, "or" divider, social buttons) is also taken from this
@@ -38,7 +38,7 @@ No single "all-screens" mockup exists yet. What we actually have, in order of tr
    inspiration, mainly relevant to the B2B app. For the consumer app, the one
    applicable takeaway is the "Repeat Customer Rate" circular gauge (ring +
    center number + subtitle), which further confirms the ring/donut decision
-   below. Its shadowed cards and colorful icon chips are NOT ours — ScoreWise
+   below. Its shadowed cards and colorful icon chips are NOT ours — PesaScore
    cards have no drop shadow (see tokens).
 
 **Screens 1, 4, 5, 6 (splash, consent, statement upload, active requests) have no
@@ -98,7 +98,7 @@ Rules carried over from the brief, unaffected by the mockups:
 ## Folder structure
 
 ```
-scorewise-consumer/
+pesascore-consumer/
   CLAUDE.md
   mockups/                          # reference only, not shipped
     b2b-dashboard-token-reference.html
@@ -152,7 +152,7 @@ scorewise-consumer/
     package.json
 ```
 
-The backend is real now, not a future placeholder: `../scorewise-backend`
+The backend is real now, not a future placeholder: `../pesascore-backend`
 (FastAPI, run separately on `localhost:8000`). See its CLAUDE.md for what it
 actually does and its known limits (in-memory store, unverified PDF parser).
 
@@ -200,7 +200,7 @@ actually does and its known limits (in-memory store, unverified PDF parser).
    file POST, real backend parsing, real errors surfaced in the UI (bad PDF,
    wrong password) instead of a simulated delay + fake success.
 9. ~~`api/score.ts`, `api/consent.ts`, `api/requests.ts`~~ — done, now calling
-   the real backend at `http://localhost:8000` (see `../scorewise-backend`)
+   the real backend at `http://localhost:8000` (see `../pesascore-backend`)
    instead of local mock logic. `RequestsContext` lost `addGrant` — approval
    now happens server-side via `respondToConsent()`, and the context just
    `refresh()`es after.
@@ -211,7 +211,7 @@ actually does and its known limits (in-memory store, unverified PDF parser).
     Verified in-browser: uploading a real (synthetic) statement changes the
     score from 746 to 737 with correctly recalculated signals; uploading
     garbage shows a real error instead of crashing or faking success. See
-    `../scorewise-backend/CLAUDE.md` for what the parser can and can't
+    `../pesascore-backend/CLAUDE.md` for what the parser can and can't
     actually do yet — it has not been tested against a real Safaricom export.
     Accessibility pass (tap targets, contrast on status pills) still open.
 
@@ -264,7 +264,7 @@ yet") predates step 28 and is now stale — treat step 28 as the correction.
     prompt actually appears), but there is no backend issuing challenges or
     verifying the signature — it proves the *interaction* works, not that
     it's cryptographically secure end to end. Wiring real verification is a
-    backend task for whenever `../scorewise-backend` has auth.
+    backend task for whenever `../pesascore-backend` has auth.
 
     **Update — PIN lockout added** (see the backend's CLAUDE.md "Security"
     section for the full picture, including why this and not hashing):
@@ -351,7 +351,7 @@ yet") predates step 28 and is now stale — treat step 28 as the correction.
 
     **While chasing an apparent regression here, found a real testing gotcha
     worth recording**: creating or deleting a debug script *inside*
-    `scorewise-backend/` while the server runs with `--reload` triggers
+    `pesascore-backend/` while the server runs with `--reload` triggers
     WatchFiles and restarts the worker, wiping all in-memory state (back to
     `name: null`, defaults, etc.). Looked exactly like a data bug until traced
     to the reload log. Put ad-hoc debug scripts in the OS temp dir instead,
@@ -503,7 +503,7 @@ yet") predates step 28 and is now stale — treat step 28 as the correction.
 
 28. ~~Real Supabase Auth, replacing mocked sign up/log in~~ — done, paired
     with the backend's "Supabase migration, pass 1" (see
-    `../scorewise-backend/CLAUDE.md`). `AuthForm.tsx`'s Continue button now
+    `../pesascore-backend/CLAUDE.md`). `AuthForm.tsx`'s Continue button now
     calls real `signUp`/`logIn` (`api/auth.ts`) against the backend, which
     brokers Supabase Auth and sets the session as httpOnly cookies — the
     frontend never talks to Supabase directly and never handles a raw
@@ -557,7 +557,7 @@ would 404 instead of loading the app. Connect this repo in Netlify's
 dashboard and it picks this up automatically. One thing `netlify.toml`
 deliberately doesn't set: `VITE_API_BASE_URL` — that has to be added by hand
 in Netlify's Site settings → Environment variables, pointed at wherever
-`../scorewise-backend` ends up deployed (see its own CLAUDE.md's
+`../pesascore-backend` ends up deployed (see its own CLAUDE.md's
 "Deployment" section), since it isn't known until that backend exists.
 
 ## Open questions (not yet blocking, revisit before shipping)
@@ -568,7 +568,7 @@ in Netlify's Site settings → Environment variables, pointed at wherever
   installed (no dependency, no `setupWorker`). `mocks/consentRequest.ts` and
   `mocks/statementMetrics.ts` were the real stand-in, but real backend
   integration (step 9 onward) happened directly against it and left those two
-  files with zero imports anywhere — deleted during the ScoreWise restructure
+  files with zero imports anywhere — deleted during the PesaScore restructure
   pass rather than left as dead code.
 - Exact radius brief says "12-16px" but the only real file uses a flat 16px —
   using 16px everywhere for consistency; flag if a tighter card (e.g. list rows)

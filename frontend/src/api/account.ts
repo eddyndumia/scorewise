@@ -7,7 +7,7 @@ export async function downloadDataExport(): Promise<void> {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = 'scorewise-data-export.json';
+  link.download = 'pesascore-data-export.json';
   document.body.appendChild(link);
   link.click();
   link.remove();

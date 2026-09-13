@@ -61,7 +61,7 @@ export function PinSetup() {
           <FingerprintIcon size={26} />
         </div>
         <h1 className={styles.title}>Use Face ID or Touch ID?</h1>
-        <p className={styles.subtitle}>Unlock ScoreWise faster next time, without typing your PIN.</p>
+        <p className={styles.subtitle}>Unlock PesaScore faster next time, without typing your PIN.</p>
         <div className={styles.actions}>
           <Button variant="primary" onClick={handleEnableBiometric}>
             Enable
@@ -78,7 +78,7 @@ export function PinSetup() {
     <div className={styles.screen}>
       <h1 className={styles.title}>{step === 'create' ? 'Create a PIN' : 'Confirm your PIN'}</h1>
       <p className={styles.subtitle}>
-        {step === 'create' ? "You'll use this to unlock ScoreWise." : 'Enter it once more.'}
+        {step === 'create' ? "You'll use this to unlock PesaScore." : 'Enter it once more.'}
       </p>
       <p className={styles.errorText}>{error}</p>
       <PinKeypad

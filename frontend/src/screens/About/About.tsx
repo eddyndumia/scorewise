@@ -3,7 +3,7 @@ import { Logo } from '../../components/Logo';
 import styles from './About.module.css';
 
 // Not formal partnerships — these are the lenders/banks the statement classifier
-// currently recognizes by name (see scorewise-backend/app/pdf_parser.py
+// currently recognizes by name (see pesascore-backend/app/pdf_parser.py
 // REPAYMENT_KEYWORDS). Worded honestly below rather than as "partners."
 const RECOGNIZED_LENDERS = [
   'SACCOs (any, by name)',
@@ -31,12 +31,12 @@ export function About() {
 
       <div className={styles.header}>
         <Logo size={40} />
-        <p className={styles.wordmark}>scorewise</p>
+        <p className={styles.wordmark}>pesascore</p>
         <p className={styles.version}>Version 0.1.0 (prototype)</p>
       </div>
 
       <p className={styles.description}>
-        ScoreWise turns your own M-Pesa transaction history into a credit score you can understand and choose to
+        PesaScore turns your own M-Pesa transaction history into a credit score you can understand and choose to
         share — without needing a bank account or a formal credit history.
       </p>
 

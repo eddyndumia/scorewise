@@ -27,7 +27,7 @@ export function Splash() {
   return (
     <div className={styles.screen}>
       <Logo size={48} />
-      <h1 className={styles.wordmark}>scorewise</h1>
+      <h1 className={styles.wordmark}>pesascore</h1>
     </div>
   );
 }

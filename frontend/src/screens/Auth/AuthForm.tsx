@@ -78,7 +78,7 @@ export function AuthForm({
     <div className={styles.screen}>
       <div className={styles.header}>
         <Logo size={22} />
-        <h1 className={styles.wordmark}>scorewise</h1>
+        <h1 className={styles.wordmark}>pesascore</h1>
       </div>
       <p className={styles.tagline}>{tagline}</p>
 

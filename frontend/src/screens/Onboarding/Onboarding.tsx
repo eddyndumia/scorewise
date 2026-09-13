@@ -15,7 +15,7 @@ export function Onboarding() {
       </div>
 
       <div className={styles.body}>
-        <h1 className={styles.wordmark}>scorewise</h1>
+        <h1 className={styles.wordmark}>pesascore</h1>
         <p className={styles.tagline}>Your M-Pesa history, decoded into a credit score you actually understand.</p>
 
         <div className={styles.spacer} />

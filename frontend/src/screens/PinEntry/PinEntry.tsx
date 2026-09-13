@@ -99,7 +99,7 @@ export function PinEntry() {
         <Logo size={22} />
       </div>
       <h1 className={styles.title}>Welcome back</h1>
-      <p className={styles.subtitle}>Enter your PIN to unlock ScoreWise.</p>
+      <p className={styles.subtitle}>Enter your PIN to unlock PesaScore.</p>
       <p className={styles.errorText}>{error}</p>
       <PinKeypad value={pin} onChange={setPinValue} error={!!error} disabled={locked} />
 

@@ -66,7 +66,7 @@ export function Home() {
       <div className={styles.topbar}>
         <div className={styles.brand}>
           <Logo size={22} />
-          <span className={styles.brandName}>scorewise</span>
+          <span className={styles.brandName}>pesascore</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <NotificationBell />

@@ -32,7 +32,7 @@ export async function downloadScoreReport(): Promise<void> {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = 'scorewise-score-report.pdf';
+  link.download = 'pesascore-score-report.pdf';
   document.body.appendChild(link);
   link.click();
   link.remove();

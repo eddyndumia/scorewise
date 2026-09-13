@@ -10,8 +10,8 @@
 
 export const termsSections: { title: string; body: string }[] = [
   {
-    title: '1. What ScoreWise is',
-    body: 'ScoreWise produces an informational score estimate based on patterns in your M-Pesa transaction history. It is not an official or regulated credit score, is not issued by any credit reference bureau, and is not a guarantee that any lender will approve, reject, or offer any particular terms on a loan. Lenders make their own decisions using their own criteria.',
+    title: '1. What PesaScore is',
+    body: 'PesaScore produces an informational score estimate based on patterns in your M-Pesa transaction history. It is not an official or regulated credit score, is not issued by any credit reference bureau, and is not a guarantee that any lender will approve, reject, or offer any particular terms on a loan. Lenders make their own decisions using their own criteria.',
   },
   {
     title: '2. Not financial or credit advice',
@@ -27,11 +27,11 @@ export const termsSections: { title: string; body: string }[] = [
   },
   {
     title: '5. No warranty; limitation of liability',
-    body: 'ScoreWise is provided "as is" and "as available," without warranties of any kind, express or implied, including as to accuracy, reliability, or fitness for a particular purpose. To the fullest extent permitted by law, ScoreWise and its operators are not liable for any loss or damage — including a declined loan application, a lending decision made using your score, or any financial loss — arising from your use of the app or reliance on any score, tip, or recommendation it produces.',
+    body: 'PesaScore is provided "as is" and "as available," without warranties of any kind, express or implied, including as to accuracy, reliability, or fitness for a particular purpose. To the fullest extent permitted by law, PesaScore and its operators are not liable for any loss or damage — including a declined loan application, a lending decision made using your score, or any financial loss — arising from your use of the app or reliance on any score, tip, or recommendation it produces.',
   },
   {
     title: '6. Your responsibilities',
-    body: 'You confirm that any statement you upload belongs to you, that you will not attempt to upload or misrepresent someone else\'s financial data, and that you will use ScoreWise lawfully. You are responsible for keeping your PIN and device secure.',
+    body: 'You confirm that any statement you upload belongs to you, that you will not attempt to upload or misrepresent someone else\'s financial data, and that you will use PesaScore lawfully. You are responsible for keeping your PIN and device secure.',
   },
   {
     title: '7. Changes to these terms',

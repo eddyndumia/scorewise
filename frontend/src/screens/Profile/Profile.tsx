@@ -94,7 +94,7 @@ export function Profile() {
           </span>
         </button>
         <button className={styles.row} onClick={() => navigate('/profile/about')}>
-          <span className={styles.rowLabel}>About ScoreWise</span>
+          <span className={styles.rowLabel}>About PesaScore</span>
           <span className={styles.chevron}>
             <Chevron />
           </span>

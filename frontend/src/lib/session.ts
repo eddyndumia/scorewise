@@ -140,8 +140,8 @@ export async function enrollBiometric(): Promise<boolean> {
     const credential = (await navigator.credentials.create({
       publicKey: {
         challenge,
-        rp: { name: 'ScoreWise' },
-        user: { id: userId, name: 'scorewise-user', displayName: 'ScoreWise user' },
+        rp: { name: 'PesaScore' },
+        user: { id: userId, name: 'pesascore-user', displayName: 'PesaScore user' },
         pubKeyCredParams: [{ type: 'public-key', alg: -7 }],
         authenticatorSelection: { authenticatorAttachment: 'platform', userVerification: 'required' },
         timeout: 60000,
