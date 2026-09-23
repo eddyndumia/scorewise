@@ -1,5 +1,12 @@
 # PesaScore — Consumer App
 
+> **Being replaced (2026-09-23):** the borrower app is moving to Flutter in
+> `../pesascore-mobile`. Keep this app working until mobile matches it, but
+> build new borrower features there. Requirements: `../pesascore-backend/docs/REQUIREMENTS.md`.
+> Several steps below describe things since removed: the demo-score skip, the
+> simulate button, the canned AI assistant, Google/Apple stubs, and seeded
+> default data. A new account now has no score until it uploads a statement.
+
 Borrower-facing mobile app where M-Pesa users view their own credit score, manage
 lender consent, and (until Daraja is live) upload statements manually.
 
