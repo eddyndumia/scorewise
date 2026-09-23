@@ -46,13 +46,15 @@ export function Home() {
   const [profileName, setProfileName] = useState<string | null>(null);
   const [cashFlow, setCashFlow] = useState<CashFlowPoint[]>([]);
   const [selectedSignal, setSelectedSignal] = useState<Signal | null>(null);
-  const { grants } = useRequests();
+  const { grants, refresh } = useRequests();
   const navigate = useNavigate();
 
   useEffect(() => {
+    refresh().catch(() => {});
     getScore().then(setResult);
     getProfile().then((p) => setProfileName(p.name));
     getCashFlow().then(setCashFlow);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!result) return <LoadingState message="Loading your score…" />;

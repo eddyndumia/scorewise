@@ -31,8 +31,13 @@ export function RequestsProvider({ children }: { children: ReactNode }) {
     setPendingConsents(p);
   };
 
+  // This provider mounts before login, so the first fetch 401s for a
+  // logged-out visitor. Screens that read this data call refresh() and
+  // refreshPending() themselves on mount, so a failure here just means empty.
   useEffect(() => {
-    Promise.all([refresh(), refreshPending()]).finally(() => setLoading(false));
+    Promise.all([refresh(), refreshPending()])
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
   const revokeGrant = async (id: string) => {

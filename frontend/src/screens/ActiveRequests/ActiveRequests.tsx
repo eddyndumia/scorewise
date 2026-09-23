@@ -16,9 +16,16 @@ function useNow(intervalMs: number) {
 }
 
 export function ActiveRequests() {
-  const { grants, pendingConsents, revokeGrant, simulateIncoming } = useRequests();
+  const { grants, pendingConsents, revokeGrant, simulateIncoming, refresh, refreshPending } = useRequests();
   const navigate = useNavigate();
   const now = useNow(30_000);
+
+  // The shared context only fetches once at app load (often before login),
+  // so pick up grants and lender requests that arrived since then.
+  useEffect(() => {
+    Promise.all([refresh(), refreshPending()]).catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles.screen}>
