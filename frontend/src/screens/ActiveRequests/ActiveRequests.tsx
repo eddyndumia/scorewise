@@ -16,7 +16,7 @@ function useNow(intervalMs: number) {
 }
 
 export function ActiveRequests() {
-  const { grants, pendingConsents, revokeGrant, simulateIncoming, refresh, refreshPending } = useRequests();
+  const { grants, pendingConsents, revokeGrant, refresh, refreshPending } = useRequests();
   const navigate = useNavigate();
   const now = useNow(30_000);
 
@@ -63,10 +63,6 @@ export function ActiveRequests() {
           ))}
         </div>
       )}
-
-      <button className={styles.demoLink} onClick={simulateIncoming}>
-        + Simulate an incoming request
-      </button>
 
       <div style={{ marginTop: 'auto' }}>
         <BottomNav />

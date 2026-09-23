@@ -13,6 +13,8 @@ import { SavingsGoalCard } from '../../components/SavingsGoalCard/SavingsGoalCar
 import { NotificationBell } from '../../components/NotificationBell/NotificationBell';
 import { LoadingState } from '../../components/LoadingState/LoadingState';
 import { getScore } from '../../api/score';
+import { ApiError } from '../../api/client';
+import { Button } from '../../components/Button/Button';
 import { getProfile } from '../../api/profile';
 import { getCashFlow, type CashFlowPoint } from '../../api/cashFlow';
 import type { ScoreResult, Signal } from '../../lib/scoring';
@@ -43,6 +45,7 @@ function initials(fullName: string | null): string {
 
 export function Home() {
   const [result, setResult] = useState<ScoreResult | null>(null);
+  const [noScore, setNoScore] = useState(false);
   const [profileName, setProfileName] = useState<string | null>(null);
   const [cashFlow, setCashFlow] = useState<CashFlowPoint[]>([]);
   const [selectedSignal, setSelectedSignal] = useState<Signal | null>(null);
@@ -51,11 +54,42 @@ export function Home() {
 
   useEffect(() => {
     refresh().catch(() => {});
-    getScore().then(setResult);
+    getScore()
+      .then(setResult)
+      .catch((e) => {
+        if (e instanceof ApiError && e.code === 'no_score') setNoScore(true);
+      });
     getProfile().then((p) => setProfileName(p.name));
     getCashFlow().then(setCashFlow);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (noScore) {
+    return (
+      <div className={styles.screen}>
+        <div className={styles.topbar}>
+          <div className={styles.brand}>
+            <Logo size={22} />
+            <span className={styles.brandName}>pesascore</span>
+          </div>
+          <NotificationBell />
+        </div>
+        <Card>
+          <h2 style={{ margin: '0 0 8px' }}>No score yet</h2>
+          <p style={{ margin: '0 0 16px', color: 'var(--text-secondary)' }}>
+            Your score comes from your own M-Pesa statement. Upload it and you'll see your score and what shapes it
+            before anyone else can.
+          </p>
+          <Button variant="primary" iconRight="→" onClick={() => navigate('/statement-instructions')}>
+            Get my score
+          </Button>
+        </Card>
+        <div style={{ marginTop: 'auto' }}>
+          <BottomNav />
+        </div>
+      </div>
+    );
+  }
 
   if (!result) return <LoadingState message="Loading your score…" />;
 
@@ -93,7 +127,7 @@ export function Home() {
           <span>{isUp ? '↑' : '↓'}</span>
           <span>
             {isUp ? '+' : ''}
-            {result.delta} this month
+            {result.delta} vs. earlier months
           </span>
         </div>
       </div>
@@ -106,7 +140,7 @@ export function Home() {
         <div className={styles.miniCard}>
           <p className={styles.miniLabel}>Active requests</p>
           <p className={styles.miniValue}>
-            {grants.length} {grants.length === 1 ? 'SACCO' : 'SACCOs'}
+            {grants.length} {grants.length === 1 ? 'lender' : 'lenders'}
           </p>
         </div>
         <div className={styles.miniCard}>

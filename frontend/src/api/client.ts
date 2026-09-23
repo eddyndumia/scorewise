@@ -20,9 +20,31 @@ async function guardFetch(input: string, init?: RequestInit): Promise<Response> 
   }
 }
 
+// An HTTP error from the backend, with its status and, when the backend
+// sent one, a stable machine-readable code (e.g. "no_score" when there's no
+// statement yet), so screens can branch on the case instead of string-matching.
+export class ApiError extends Error {
+  status: number;
+  code: string | null;
+  constructor(status: number, code: string | null, message: string) {
+    super(message);
+    this.status = status;
+    this.code = code;
+  }
+}
+
+async function toApiError(res: Response, fallback: string): Promise<ApiError> {
+  const body = await res.json().catch(() => null);
+  const detail = body?.detail;
+  if (detail && typeof detail === 'object') {
+    return new ApiError(res.status, detail.code ?? null, detail.message ?? fallback);
+  }
+  return new ApiError(res.status, null, typeof detail === 'string' ? detail : fallback);
+}
+
 export async function apiGet<T>(path: string): Promise<T> {
   const res = await guardFetch(`${BASE_URL}${path}`, { credentials: 'include' });
-  if (!res.ok) throw new Error(`GET ${path} failed: ${res.status}`);
+  if (!res.ok) throw await toApiError(res, `GET ${path} failed: ${res.status}`);
   return res.json();
 }
 
@@ -33,9 +55,6 @@ export async function apiPost<T>(path: string, body?: unknown): Promise<T> {
     headers: body ? { 'Content-Type': 'application/json' } : undefined,
     body: body ? JSON.stringify(body) : undefined,
   });
-  if (!res.ok) {
-    const detail = await res.json().catch(() => null);
-    throw new Error(detail?.detail ?? `POST ${path} failed: ${res.status}`);
-  }
+  if (!res.ok) throw await toApiError(res, `POST ${path} failed: ${res.status}`);
   return res.json();
 }

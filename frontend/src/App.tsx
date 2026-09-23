@@ -20,7 +20,6 @@ import { TransactionReview } from './screens/TransactionReview/TransactionReview
 import { Profile } from './screens/Profile/Profile';
 import { About } from './screens/About/About';
 import { PrivacySecurity } from './screens/PrivacySecurity/PrivacySecurity';
-import { AIAssistant } from './screens/AIAssistant/AIAssistant';
 import { ScoreSimulator } from './screens/ScoreSimulator/ScoreSimulator';
 import pageTransitionStyles from './components/PageTransition.module.css';
 
@@ -106,14 +105,6 @@ function AnimatedRoutes() {
           element={
             <RequireUnlocked>
               <PrivacySecurity />
-            </RequireUnlocked>
-          }
-        />
-        <Route
-          path="/assistant"
-          element={
-            <RequireUnlocked>
-              <AIAssistant />
             </RequireUnlocked>
           }
         />

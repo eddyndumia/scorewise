@@ -1,10 +1,10 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './BottomNav.module.css';
-import { HomeIcon, SparkleIcon, UserIcon } from './icons';
+import { HomeIcon, ShieldIcon, UserIcon } from './icons';
 
 const tabs = [
   { path: '/home', Icon: HomeIcon },
-  { path: '/assistant', Icon: SparkleIcon },
+  { path: '/requests', Icon: ShieldIcon },
   { path: '/profile', Icon: UserIcon },
 ] as const;
 

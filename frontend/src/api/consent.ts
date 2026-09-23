@@ -20,7 +20,3 @@ export async function getPendingConsentRequest(id: string): Promise<PendingConse
 export async function respondToConsent(id: string, approve: boolean): Promise<{ ok: boolean; grant: ActiveGrantDTO | null }> {
   return apiPost(`/v1/consent/${id}/respond`, { approve });
 }
-
-export async function simulateIncomingRequest(): Promise<PendingConsentRequest> {
-  return apiPost<PendingConsentRequest>('/v1/consent/simulate');
-}

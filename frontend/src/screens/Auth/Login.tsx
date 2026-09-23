@@ -5,7 +5,6 @@ export function Login() {
     <AuthForm
       tagline="Welcome back — log in to see your score."
       submitLabel="Log in"
-      socialVerb="Log in"
       minPasswordLength={1}
       passwordPlaceholder="Password"
       switchText="New here?"

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { ApiError } from '../../api/client';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../../components/Button/Button';
 import { ExpiryBadge } from '../../components/ExpiryBadge/ExpiryBadge';
@@ -27,6 +28,7 @@ export function ConsentRequest() {
   const { requestId } = useParams<{ requestId: string }>();
   const { refresh, refreshPending } = useRequests();
   const [request, setRequest] = useState<PendingConsentRequest | null>(null);
+  const [needsScore, setNeedsScore] = useState(false);
 
   useEffect(() => {
     if (!requestId) return;
@@ -36,7 +38,15 @@ export function ConsentRequest() {
   if (!request) return null;
 
   const handleAllow = async () => {
-    await respondToConsent(request.id, true);
+    try {
+      await respondToConsent(request.id, true);
+    } catch (e) {
+      if (e instanceof ApiError && e.code === 'no_score') {
+        setNeedsScore(true);
+        return;
+      }
+      throw e;
+    }
     await Promise.all([refresh(), refreshPending()]);
     navigate('/requests');
   };
@@ -77,6 +87,19 @@ export function ConsentRequest() {
       <div className={styles.expiryRow}>
         <ExpiryBadge label={`Access expires ${request.grantDurationDays} days after approval`} />
       </div>
+
+      {needsScore && (
+        <p style={{ color: 'var(--text-secondary)', fontSize: 14, margin: '12px 0' }}>
+          You don't have a score yet. Upload your statement first so you see your score before {request.lenderName}{' '}
+          does. This request will wait for you.{' '}
+          <button
+            onClick={() => navigate('/statement-instructions')}
+            style={{ background: 'none', border: 'none', color: 'var(--violet)', padding: 0, font: 'inherit', cursor: 'pointer' }}
+          >
+            Upload my statement
+          </button>
+        </p>
+      )}
 
       <div className={styles.actions}>
         <Button variant="secondary" onClick={handleDeny}>

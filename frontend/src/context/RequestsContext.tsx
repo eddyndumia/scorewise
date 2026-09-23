@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { getActiveGrants, revokeAccess, type ActiveGrantDTO } from '../api/requests';
-import { getPendingConsentRequests, simulateIncomingRequest, type PendingConsentRequest } from '../api/consent';
+import { getPendingConsentRequests, type PendingConsentRequest } from '../api/consent';
 
 export type ActiveGrant = ActiveGrantDTO;
 
@@ -11,7 +11,6 @@ interface RequestsContextValue {
   refresh: () => Promise<void>;
   refreshPending: () => Promise<void>;
   revokeGrant: (id: string) => Promise<void>;
-  simulateIncoming: () => Promise<void>;
 }
 
 const RequestsContext = createContext<RequestsContextValue | null>(null);
@@ -45,13 +44,8 @@ export function RequestsProvider({ children }: { children: ReactNode }) {
     setGrants((prev) => prev.filter((g) => g.id !== id));
   };
 
-  const simulateIncoming = async () => {
-    await simulateIncomingRequest();
-    await refreshPending();
-  };
-
   return (
-    <RequestsContext.Provider value={{ grants, pendingConsents, loading, refresh, refreshPending, revokeGrant, simulateIncoming }}>
+    <RequestsContext.Provider value={{ grants, pendingConsents, loading, refresh, refreshPending, revokeGrant }}>
       {children}
     </RequestsContext.Provider>
   );

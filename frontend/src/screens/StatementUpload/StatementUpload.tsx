@@ -137,16 +137,11 @@ export function StatementUpload() {
                 ? 'Still working — if this is the first request in a while, the server can take up to a minute to wake up.'
                 : uploadFraction !== null && uploadFraction < 1
                   ? `Uploading — ${Math.round(uploadFraction * 100)}%`
-                  : 'Reading your statement — this stays on your device.'}
+                  : 'Reading your statement. It is processed in memory and never saved.'}
             </p>
           </div>
         )}
         {error && <p className={styles.errorText}>{error}</p>}
-        {isRegistrationStep && status === 'idle' && (
-          <button className={styles.skipLink} onClick={() => navigate('/pin-setup')}>
-            Skip for now — use a demo score
-          </button>
-        )}
       </div>
     </div>
   );
